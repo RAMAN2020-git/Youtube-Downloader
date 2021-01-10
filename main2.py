@@ -1,21 +1,12 @@
 from flask import Flask, render_template, request
 
-from gpiozero import LED
-
 from pytube import YouTube
 
 from flask import send_file
 
 from pymkv import MKVFile, MKVTrack
 
-led = LED(17)
-
 app=Flask(__name__)
-
-led.off()
-def done_download(test, file):
-    led.off()
-
 
 @app.route('/')
 def home():
@@ -24,14 +15,14 @@ def home():
 @app.route('/downloading/', methods=['post', 'get'])
 def downloading():
     if request.method == 'POST':
-        return render_template('downloading.html')
+        #return render_template('downloading.html')
         youtube_link = request.form.get('youtube')
         subtitle = request.form.get('subtitles')
         print(youtube_link)
-        yt = YouTube(youtube_link, on_complete_callback=done_download)
+        yt = YouTube(youtube_link)
         stream = yt.streams.first()
         print(stream.default_filename)
-        led.on()
+        
         print(yt.captions.all())
         
         if (subtitle) :
@@ -40,7 +31,7 @@ def downloading():
                 caption.download('subtitle')
             
         stream.download(filename='video')
-        
+    
         mkv = MKVFile()
         mkv.add_track('video.mp4')
         
@@ -48,7 +39,7 @@ def downloading():
             mkv.add_track('subtitle (a.en).srt')
             
         mkv.mux('output.mkv')
-        
+        return send_file('video.mp4', as_attachment=True, attachment_filename=(stream.default_filename))
         
     
 @app.route('/youtube/', methods=['post', 'get'])
