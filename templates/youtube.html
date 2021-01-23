@@ -1,25 +1,31 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+<body style="background-color:red;">
 
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
 
-    <form action="/downloading/" method="post">
-
-        <p>
-            <label for="youtube">youtube:</label>
-            <input type="text" name="youtube">
-        </p>
-	<input type="checkbox" name="subtitles" value="subtitles">subtitles</input>
-        <p>
-            <input type="submit" formmethod="post">
-        </p>
-    </form>
-
-</body>
-</html>
+    <h2 style="color:blue;">Please paste the youtube link in the box and click download </h2>
+    
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+    </head>
+    <body>
+    
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    
+        <form action="/downloading/" method="post">
+    
+            <p>
+                <label for="youtube">youtube:</label>
+                <input type="text" name="youtube">
+            </p>
+                <input type="submit" formmethod="post">
+            </p>
+        </form>
+    
+    <a href="/">home</a>
+    
+    </body>
+    </html>
+    
